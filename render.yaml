@@ -8,8 +8,8 @@ services:
     healthCheckPath: /health
     envVars:
       - key: AIRTABLE_API_TOKEN
-        fromSecret: true
+        sync: false
       - key: AIRTABLE_BASE_ID
-        fromSecret: true
+        sync: false
       - key: AIRTABLE_TABLE_ID
-        fromSecret: true
+        sync: false
