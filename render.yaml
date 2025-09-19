@@ -6,3 +6,10 @@ services:
     buildCommand: "pip install -r backend/requirements.txt"
     startCommand: "gunicorn -w 4 -k uvicorn.workers.UvicornWorker backend.main:app --bind 0.0.0.0:$PORT"
     healthCheckPath: /health
+    envVars:
+      - key: AIRTABLE_API_TOKEN
+        fromSecret: true
+      - key: AIRTABLE_BASE_ID
+        fromSecret: true
+      - key: AIRTABLE_TABLE_ID
+        fromSecret: true

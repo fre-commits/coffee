@@ -1,68 +1,56 @@
-import sqlite3
+from pyairtable import Api
+import os
 
-DATABASE_URL = "./coffee.db"
+AIRTABLE_API_TOKEN = os.environ.get("AIRTABLE_API_TOKEN")
+AIRTABLE_BASE_ID = os.environ.get("AIRTABLE_BASE_ID")
+AIRTABLE_TABLE_ID = os.environ.get("AIRTABLE_TABLE_ID")
 
-def get_db_connection():
-    conn = sqlite3.connect(DATABASE_URL)
-    conn.row_factory = sqlite3.Row
-    return conn
+api = Api(AIRTABLE_API_TOKEN)
+table = api.table(AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID)
 
-def create_tables(conn):
-    cursor = conn.cursor()
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS coffees (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            description TEXT,
-            image_url TEXT,
-            votes INTEGER DEFAULT 0
+def get_all_coffees():
+    records = table.all()
+    coffees = []
+    for record in records:
+        coffees.append(
+            {
+                "id": record["id"],
+                "name": record["fields"].get("name"),
+                "description": record["fields"].get("description"),
+                "image_url": record["fields"].get("image_url"),
+                "votes": record["fields"].get("votes", 0),
+            }
         )
-    """)
-    conn.commit()
+    return coffees
 
-def seed_database(conn):
-    cursor = conn.cursor()
-    cursor.execute("SELECT COUNT(*) FROM coffees")
-    if cursor.fetchone()[0] == 0:
-        cursor.execute("""
-            INSERT INTO coffees (name, description, image_url, votes) VALUES (?, ?, ?, ?)
-        """, ("Espresso", "A strong, concentrated coffee beverage.", "/static/espresso.jpg", 0))
-        conn.commit()
+def increment_coffee_vote(coffee_id):
+    record = table.get(coffee_id)
+    votes = record["fields"].get("votes", 0)
+    table.update(coffee_id, {"votes": votes + 1})
+    return True
 
-def get_all_coffees(conn):
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, name, description, image_url, votes FROM coffees")
-    coffees = cursor.fetchall()
-    return [dict(coffee) for coffee in coffees]
+def add_coffee(name, description, image_url):
+    record = table.create(
+        {
+            "name": name,
+            "description": description,
+            "image_url": image_url,
+            "votes": 0,
+        }
+    )
+    return record["id"]
 
-def increment_coffee_vote(conn, coffee_id):
-    cursor = conn.cursor()
-    cursor.execute("UPDATE coffees SET votes = votes + 1 WHERE id = ?", (coffee_id,))
-    conn.commit()
-    return cursor.rowcount > 0
+def delete_coffee(coffee_id):
+    table.delete(coffee_id)
+    return True
 
-def add_coffee(conn, name, description, image_url):
-    cursor = conn.cursor()
-    cursor.execute("""
-        INSERT INTO coffees (name, description, image_url) VALUES (?, ?, ?)
-    """, (name, description, image_url))
-    conn.commit()
-    return cursor.lastrowid
-
-def delete_coffee(conn, coffee_id):
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM coffees WHERE id = ?", (coffee_id,))
-    conn.commit()
-    return cursor.rowcount > 0
-
-def update_coffee(conn, coffee_id, name, description, image_url):
-    cursor = conn.cursor()
-    cursor.execute("""
-        UPDATE coffees
-        SET name = ?,
-            description = ?,
-            image_url = ?
-        WHERE id = ?
-    """, (name, description, image_url, coffee_id))
-    conn.commit()
-    return cursor.rowcount > 0
+def update_coffee(coffee_id, name, description, image_url):
+    table.update(
+        coffee_id,
+        {
+            "name": name,
+            "description": description,
+            "image_url": image_url,
+        },
+    )
+    return True
