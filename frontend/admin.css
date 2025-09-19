@@ -1,0 +1,187 @@
+/* Basic styling for Coffee Vote Admin Panel */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+#coffee-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.coffee-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 300px;
+    text-align: center;
+}
+
+.coffee-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.coffee-item h2 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.coffee-item p {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.coffee-item .votes {
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+    .coffee-item {
+        width: 100%;
+    }
+}
+
+/* Admin specific styles */
+.admin-section {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.admin-section form input[type="text"],
+.admin-section form button {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.admin-section form button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.admin-section form button:hover {
+    background-color: #0056b3;
+}
+
+.coffee-item button {
+    background-color: #dc3545; /* Red for delete */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin: 5px;
+}
+
+.coffee-item button.edit-button {
+    background-color: #ffc107; /* Yellow for edit */
+    color: #333;
+}
+
+.coffee-item button.edit-button:hover {
+    background-color: #e0a800;
+}
+
+.coffee-item button.save-button {
+    background-color: #28a745; /* Green for save */
+    color: white;
+}
+
+.coffee-item button.cancel-button {
+    background-color: #6c757d; /* Gray for cancel */
+    color: white;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #282a36; /* Dracula background */
+    color: #f8f8f2; /* Dracula foreground */
+}
+
+body.dark-mode h1,
+body.dark-mode h2 {
+    color: #f8f8f2;
+}
+
+body.dark-mode .admin-section {
+    background-color: #44475a; /* Dracula current line */
+    border-color: #6272a4; /* Dracula comment */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .admin-section form input[type="text"] {
+    background-color: #6272a4;
+    color: #f8f8f2;
+    border-color: #6272a4;
+}
+
+body.dark-mode .admin-section form input[type="text"]::placeholder {
+    color: #bd93f9; /* A lighter color for better readability */
+}
+
+body.dark-mode .admin-section form button {
+    background-color: #bd93f9; /* Dracula purple */
+    color: #282a36;
+}
+
+body.dark-mode .admin-section form button:hover {
+    background-color: #ff79c6;
+}
+
+body.dark-mode .coffee-item {
+    background-color: #44475a; /* Dracula current line */
+    border-color: #6272a4; /* Dracula comment */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .coffee-item p {
+    color: #bd93f9; /* Dracula purple */
+}
+
+body.dark-mode .coffee-item .votes {
+    color: #50fa7b; /* Dracula green */
+}
+
+body.dark-mode .coffee-item button.delete-button {
+    background-color: #ff5555; /* Dracula red */
+    color: #282a36;
+}
+
+body.dark-mode .coffee-item button.edit-button {
+    background-color: #f1fa8c; /* Dracula yellow */
+    color: #282a36;
+}
+
+body.dark-mode .coffee-item button.save-button {
+    background-color: #50fa7b; /* Dracula green */
+    color: #282a36;
+}
+
+body.dark-mode .coffee-item button.cancel-button {
+    background-color: #6272a4; /* Dracula comment */
+    color: #f8f8f2;
+}

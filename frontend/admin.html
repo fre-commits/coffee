@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Vote Admin</title>
+    <link rel="stylesheet" href="/static/admin.css">
+</head>
+<body>
+    <button id="theme-switcher">Toggle Theme</button>
+    <h1>Coffee Vote Admin Panel</h1>
+
+    <div class="admin-section">
+        <h2>Add New Coffee</h2>
+        <form id="add-coffee-form">
+            <input type="text" id="coffee-name" placeholder="Coffee Name" required>
+            <input type="text" id="coffee-description" placeholder="Description">
+            <input type="text" id="coffee-image-url" placeholder="Image URL">
+            <button type="submit">Add Coffee</button>
+        </form>
+    </div>
+
+    <div class="admin-section">
+        <h2>Current Coffees</h2>
+        <div id="coffee-list">
+            <!-- Coffee items will be rendered here by JavaScript -->
+        </div>
+    </div>
+
+    <script src="/static/admin.js"></script>
+</body>
+</html>
