@@ -6,10 +6,3 @@ services:
     buildCommand: "pip install -r backend/requirements.txt"
     startCommand: "gunicorn -w 4 -k uvicorn.workers.UvicornWorker backend.main:app --bind 0.0.0.0:$PORT"
     healthCheckPath: /health
-    disk:
-      name: data
-      mountPath: /var/data
-      sizeGB: 1
-    envVars:
-      - key: DATABASE_URL
-        value: sqlite:////var/data/coffee.db

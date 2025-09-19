@@ -1,10 +1,9 @@
 import sqlite3
-import os
 
-DATABASE_URL = os.environ.get("DATABASE_URL", "./coffee.db")
+DATABASE_URL = "./coffee.db"
 
 def get_db_connection():
-    conn = sqlite3.connect(DATABASE_URL.split("sqlite:///")[1])
+    conn = sqlite3.connect(DATABASE_URL)
     conn.row_factory = sqlite3.Row
     return conn
 
